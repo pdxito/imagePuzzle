@@ -69,28 +69,76 @@
 		 }
 		});
 
-		function addElement(css, clipPath) {
-			// 10px 150px 150px 0px
-			//addElement("left:50px;top: 50px;")
-			var x = document.getElementById("holder")
-			var ni = document.createElement("img")
-			ni.setAttribute("src","car.png")
-			ni.setAttribute("style", css + "position: absolute; clip-path: inset(" + clipPath + ");");
-			x.appendChild(ni)
-		}
+    function addElement(css, clipPath, id) {
+        // 10px 150px 150px 0px
+        //addElement("left:50px;top: 50px;")
+        var x = document.getElementById("holder")
+        var ni = document.createElement("img")
+        var s = document.createElement("span")
+        s.setAttribute("id","s" + id)
+        
+        ni.setAttribute("src","car.png")
+        ni.setAttribute("id",id)
+        
+        
+        ni.setAttribute("style", css + "position: absolute; clip-path: inset(" + clipPath + ");");
+        s.appendChild(ni)
+        x.appendChild(ni)
+    }
+            
+    function createSquares(src, width, height, rows, cols) {
+        blockWidth = width / rows
+        blockHeight = height / cols
+        c = 0
+        for (y = 0; y < rows; y++) {
+             for (x = 0; x < cols; x++) {
+                topY = y * blockHeight
+                right = width - blockWidth - (x * blockWidth)
+                bottom = height - blockHeight - (y * blockHeight)
+                left = x * blockWidth
+                clip = topY + "px " + right + "px " + bottom + "px " + left + "px"
+//                console.log(clip)
+                css = "left: " + c * 0  + "px;"
+                addElement(css, clip, "subImg" + c)
+                c+=1
+            }
+        }
+    }
 
 
   $(document).ready(function() {
-
+    createSquares("",200,200,4,4)
   });
+            
+            function randomizeLocations() {
+                // pick two objects. based on their index we know where they are initially
+                // located.  calculate their top and left
+                /*
+                0 = 0,0
+                1 = 50,0
+                2 = 100,0
+                3 = 150,0
+                4 = 0,50
+                5 = 50,50
+                6 = 100,50
+                ...
+                
+                swap image 3 and 5 by calculating their offsets from eachother and 
+                move their positions accordingly
+                
+                */
+            }
 
-function swap()
+function swap(f1, f2)
 {
-	var f1 = document.getElementById('p1');
-	var f2 = document.getElementById('p2');
-	var initialinner = f1.innerHTML;
-	f1.innerHTML=f2.innerHTML;
-	f2.innerHTML=initialinner;
+    // have to move the whole image by adjusting obj.style.top and .left
+    // 
+    
+//	var f1 = document.getElementById('p1');
+//	var f2 = document.getElementById('p2');
+	var initialinner = f1.style.clipPath;
+	f1.style.clipPath=f2.style.clipPath;
+	f2.style.clipPath=initialinner;
 }
 
 
@@ -105,10 +153,10 @@ function swap()
 		</tr>
 	</table> -->
 	<p>
-		<img id = "i1" src="car.png">
+<!--		<img id = "i1" src="car.png">-->
 
 
-
+<p></p>
 	top margin, right margin, bottom margin, left margin
 
 
