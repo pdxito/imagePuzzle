@@ -1,0 +1,118 @@
+<HTML>
+	<head>
+        <title>Cube Puzzle</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<style>
+					.a {
+			position: absolute;
+			left:200px;
+			top:100px;
+			}
+
+			.img1 {
+			    clip-path: inset(0px 150px 150px 0px);
+			}
+
+			.img2 {
+			    clip-path: inset(0px 100px 150px 50px);
+			}
+			.wordOption {
+				font-size: XX-Large;
+				margin-left: 10px;
+				cursor: hand;
+                background-color: white;
+                font-family: "Arial";
+			}
+
+		</style>
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="puzzle_helpers.js"></script>
+
+		<script>
+
+		var rows = 3
+		var cols = 4
+		var elementCount = rows * cols
+		var blocks = Array.matrix(rows,cols);
+
+
+		function render(arr) {
+			for(var i = 0; i < arr.length; i++) {
+		    var cube = arr[i];
+		    for(var j = 0; j < cube.length; j++) {
+					// get the html element this block controls
+		        console.log("cube[" + i + "][" + j + "] = " + cube[j].activeImageId);
+		    }
+			}
+		}
+
+		function init() {
+			blocks = initBlocks("",)
+		}
+
+    function initBlocks(imgPath, rows, cols) {
+
+    }
+
+    function swapBlocks(b1, b2) {
+
+    }
+
+		$(document).keypress(function(e) {
+			 alert(e.which)
+			if(e.which == 97) {
+
+			} else if(e.which == 116) {
+
+		 } else if(e.which == 102) {
+
+		 }
+		});
+
+		function addElement(css, clipPath) {
+			// 10px 150px 150px 0px
+			//addElement("left:50px;top: 50px;")
+			var x = document.getElementById("holder")
+			var ni = document.createElement("img")
+			ni.setAttribute("src","car.png")
+			ni.setAttribute("style", css + "position: absolute; clip-path: inset(" + clipPath + ");");
+			x.appendChild(ni)
+		}
+
+
+  $(document).ready(function() {
+
+  });
+
+function swap()
+{
+	var f1 = document.getElementById('p1');
+	var f2 = document.getElementById('p2');
+	var initialinner = f1.innerHTML;
+	f1.innerHTML=f2.innerHTML;
+	f2.innerHTML=initialinner;
+}
+
+
+		</script>
+	</head>
+<BODY>
+	<div id = "holder"></div>
+	<!-- <table border="3">
+		<tr>
+			<td><span id = "p1"><img id = "i1" class = "img1" src="car.png"></span></td>
+			<td><span id = "p2"><img id = "i2" class = "img2" src="car.png"></span></td>
+		</tr>
+	</table> -->
+	<p>
+		<img id = "i1" src="car.png">
+
+
+
+	top margin, right margin, bottom margin, left margin
+
+
+
+
+</BODY>
+</HTML>
