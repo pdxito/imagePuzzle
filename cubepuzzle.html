@@ -136,9 +136,9 @@
 
 	var selImages = Array()
 
-  $(document).ready(function() {
-    createSquares("car.png",200,200,4,4)
 
+  $(document).ready(function() {
+	createSquares("https://ichef.bbci.co.uk/news/660/cpsprodpb/E9DF/production/_96317895_gettyimages-164067218.jpg",650,350,5,5)
 		$( ".imgSquare" ).click(function() {
 			selImages.push(this)
 			if (selImages.length == 2) {
@@ -158,9 +158,10 @@
 
 			a1 = shuffle(a1)
 			a2 = shuffle(a2)
+
 			for (i = 0; i < length; i++) {
-				i1 = document.getElementById("subImg"+a1[i])
-				i2 = document.getElementById("subImg"+a2[i])
+				i1 = document.getElementById("subImg" + a1[i])
+				i2 = document.getElementById("subImg" + a2[i])
 				swap(i1,i2)
 			}
   }
@@ -169,8 +170,9 @@ function swap(f1, f2)
 {
 	var initTop = f1.style.top;
 	var initLeft = f1.style.left;
-	f1.style.top=f2.style.top;
-	f1.style.left=f2.style.left;
+
+	f1.style.top = f2.style.top;
+	f1.style.left = f2.style.left;
 	f2.style.top=initTop;
 	f2.style.left=initLeft;
 }
