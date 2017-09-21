@@ -69,23 +69,29 @@
 		 }
 		});
 
-    function addElement(css, clipPath, id) {
+
+
+    function addElement(css, id) {
         // 10px 150px 150px 0px
         //addElement("left:50px;top: 50px;")
+				// <div id="holder" style="
+				//     background-image: url(car.png);
+				//     width: 50px;
+				//     height: 50px;
+				//     background-position-x: -50px;
+				//     background-position-y: -50px;
+				//     border: 2px solid blue;
+				// "></div>
         var x = document.getElementById("holder")
-        var ni = document.createElement("img")
-        var s = document.createElement("span")
-        s.setAttribute("id","s" + id)
-        
-        ni.setAttribute("src","car.png")
-        ni.setAttribute("id",id)
-        
-        
-        ni.setAttribute("style", css + "position: absolute; clip-path: inset(" + clipPath + ");");
-        s.appendChild(ni)
-        x.appendChild(ni)
+        var d = document.createElement("div")
+        d.setAttribute("id", id)
+				d.setAttribute("class", "imgSquare")
+
+
+        d.setAttribute("style", css + "position: absolute;");
+        x.appendChild(d)
     }
-            
+
     function createSquares(src, width, height, rows, cols) {
         blockWidth = width / rows
         blockHeight = height / cols
@@ -98,47 +104,75 @@
                 left = x * blockWidth
                 clip = topY + "px " + right + "px " + bottom + "px " + left + "px"
 //                console.log(clip)
-                css = "left: " + c * 0  + "px;"
-                addElement(css, clip, "subImg" + c)
+//     background-position-x: -50px;
+//     background-position-y: -50px;
+								bgposY = -topY
+								bgposX = -left
+                css = "background-position-y: " + bgposY +"px; background-position-x: " + bgposX +"px; background-image: url(" + src + "); height:" + blockHeight + "px; width: " + blockWidth+ "px; top: " + topY + "px; left: " + left  + "px;"
+                addElement(css, "subImg" + c)
                 c+=1
             }
         }
     }
 
+		function shuffle(array) {
+		  var currentIndex = array.length, temporaryValue, randomIndex;
+
+		  // While there remain elements to shuffle...
+		  while (0 !== currentIndex) {
+
+		    // Pick a remaining element...
+		    randomIndex = Math.floor(Math.random() * currentIndex);
+		    currentIndex -= 1;
+
+		    // And swap it with the current element.
+		    temporaryValue = array[currentIndex];
+		    array[currentIndex] = array[randomIndex];
+		    array[randomIndex] = temporaryValue;
+		  }
+
+		  return array;
+}
+
+	var selImages = Array()
 
   $(document).ready(function() {
-    createSquares("",200,200,4,4)
+    createSquares("car.png",200,200,4,4)
+
+		$( ".imgSquare" ).click(function() {
+			selImages.push(this)
+			if (selImages.length == 2) {
+				swap(selImages[0],selImages[1])
+				selImages = Array()
+			}
+		});
   });
-            
-            function randomizeLocations() {
-                // pick two objects. based on their index we know where they are initially
-                // located.  calculate their top and left
-                /*
-                0 = 0,0
-                1 = 50,0
-                2 = 100,0
-                3 = 150,0
-                4 = 0,50
-                5 = 50,50
-                6 = 100,50
-                ...
-                
-                swap image 3 and 5 by calculating their offsets from eachother and 
-                move their positions accordingly
-                
-                */
-            }
+
+  function randomizeLocations(length) {
+			a1 = Array()
+			a2 = Array()
+			for (i = 0; i < length; i++) {
+				a1[i] = i
+				a2[i] = i
+			}
+
+			a1 = shuffle(a1)
+			a2 = shuffle(a2)
+			for (i = 0; i < length; i++) {
+				i1 = document.getElementById("subImg"+a1[i])
+				i2 = document.getElementById("subImg"+a2[i])
+				swap(i1,i2)
+			}
+  }
 
 function swap(f1, f2)
 {
-    // have to move the whole image by adjusting obj.style.top and .left
-    // 
-    
-//	var f1 = document.getElementById('p1');
-//	var f2 = document.getElementById('p2');
-	var initialinner = f1.style.clipPath;
-	f1.style.clipPath=f2.style.clipPath;
-	f2.style.clipPath=initialinner;
+	var initTop = f1.style.top;
+	var initLeft = f1.style.left;
+	f1.style.top=f2.style.top;
+	f1.style.left=f2.style.left;
+	f2.style.top=initTop;
+	f2.style.left=initLeft;
 }
 
 
@@ -146,21 +180,5 @@ function swap(f1, f2)
 	</head>
 <BODY>
 	<div id = "holder"></div>
-	<!-- <table border="3">
-		<tr>
-			<td><span id = "p1"><img id = "i1" class = "img1" src="car.png"></span></td>
-			<td><span id = "p2"><img id = "i2" class = "img2" src="car.png"></span></td>
-		</tr>
-	</table> -->
-	<p>
-<!--		<img id = "i1" src="car.png">-->
-
-
-<p></p>
-	top margin, right margin, bottom margin, left margin
-
-
-
-
 </BODY>
 </HTML>
