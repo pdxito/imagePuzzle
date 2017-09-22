@@ -8,7 +8,7 @@
             }
             
             .holderDiv {
-                background-image: url("https://ichef.bbci.co.uk/news/660/cpsprodpb/E9DF/production/_96317895_gettyimages-164067218.jpg")
+                
             }
 
 		</style>
@@ -20,11 +20,11 @@
 
 
 		$(document).keypress(function(e) {
-			// alert(e.which)
+			 alert(e.which)
 			if(e.which == 97) {
 
-			} else if(e.which == 116) {
-
+			} else if(e.which == 115) {
+                toggleFinal()
 		 } else if(e.which == 114) {
             randomizeLocations(25)
 		 }
@@ -45,18 +45,19 @@
     function createSquares(src, width, height, rows, cols) {
         blockWidth = width / rows
         blockHeight = height / cols
-        yOffset = 100
+        yOffset = 10
+        xOffset = 10
         c = 0
         for (y = 0; y < rows; y++) {
              for (x = 0; x < cols; x++) {
                 topY = yOffset + y * blockHeight
                 right = width - blockWidth - (x * blockWidth)
                 bottom = height - blockHeight - (y * blockHeight)
-                left = x * blockWidth
+                left = x * blockWidth + xOffset
                 clip = topY + "px " + right + "px " + bottom + "px " + left + "px"
                 bgposY = -topY
                 bgposX = -left
-                css = "background-position-y: " + bgposY +"px; background-position-x: " + bgposX +"px; background-image: url(" + src + "); height:" + blockHeight + "px; width: " + blockWidth+ "px; top: " + topY + "px; left: " + left  + "px;"
+                css = "background-position-y: " + bgposY +"px; background-position-x: " + bgposX +"px; background-image: url(" + src + "); height:" + blockHeight + "px; width: " + blockWidth+ "px; top: " + topY + "px; left: " + left + "px;"
                 addElement(css, "subImg" + c)
                 c+=1
             }
@@ -142,9 +143,11 @@ function swap(f1, f2)
 <BODY>
     
 	<div id = "holder" class = "holderDiv">
-    
+    <img src = "https://ichef.bbci.co.uk/news/660/cpsprodpb/E9DF/production/_96317895_gettyimages-164067218.jpg">
     </div>
-<button type="button" onclick="randomizeLocations(25)">Click Me!</button>
+<button type="button" onclick="randomizeLocations(25)">Randomize</button>
+    <button type="button" onclick="toggleFinal()">Show Final</button>
+
 
 </BODY>
 </HTML>
