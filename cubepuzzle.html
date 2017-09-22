@@ -3,87 +3,37 @@
         <title>Cube Puzzle</title>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<style>
-					.a {
-			position: absolute;
-			left:200px;
-			top:100px;
-			}
-
-			.img1 {
-			    clip-path: inset(0px 150px 150px 0px);
-			}
-
-			.img2 {
-			    clip-path: inset(0px 100px 150px 50px);
-			}
-			.wordOption {
-				font-size: XX-Large;
-				margin-left: 10px;
-				cursor: hand;
-                background-color: white;
-                font-family: "Arial";
-			}
+            .imgSquare {
+                display: inherit;
+            }
+            
+            .holderDiv {
+                background-image: url("https://ichef.bbci.co.uk/news/660/cpsprodpb/E9DF/production/_96317895_gettyimages-164067218.jpg")
+            }
 
 		</style>
 		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<script src="puzzle_helpers.js"></script>
 
 		<script>
+            showingFinal = false
 
-		var rows = 3
-		var cols = 4
-		var elementCount = rows * cols
-		var blocks = Array.matrix(rows,cols);
-
-
-		function render(arr) {
-			for(var i = 0; i < arr.length; i++) {
-		    var cube = arr[i];
-		    for(var j = 0; j < cube.length; j++) {
-					// get the html element this block controls
-		        console.log("cube[" + i + "][" + j + "] = " + cube[j].activeImageId);
-		    }
-			}
-		}
-
-		function init() {
-			blocks = initBlocks("",)
-		}
-
-    function initBlocks(imgPath, rows, cols) {
-
-    }
-
-    function swapBlocks(b1, b2) {
-
-    }
 
 		$(document).keypress(function(e) {
-			 alert(e.which)
+			// alert(e.which)
 			if(e.which == 97) {
 
 			} else if(e.which == 116) {
 
-		 } else if(e.which == 102) {
-
+		 } else if(e.which == 114) {
+            randomizeLocations(25)
 		 }
 		});
 
-
-
     function addElement(css, id) {
-        // 10px 150px 150px 0px
-        //addElement("left:50px;top: 50px;")
-				// <div id="holder" style="
-				//     background-image: url(car.png);
-				//     width: 50px;
-				//     height: 50px;
-				//     background-position-x: -50px;
-				//     background-position-y: -50px;
-				//     border: 2px solid blue;
-				// "></div>
         var x = document.getElementById("holder")
         var d = document.createElement("div")
+        d.setAttribute("class", "imgSquare")
         d.setAttribute("id", id)
 				d.setAttribute("class", "imgSquare")
 
@@ -95,19 +45,17 @@
     function createSquares(src, width, height, rows, cols) {
         blockWidth = width / rows
         blockHeight = height / cols
+        yOffset = 100
         c = 0
         for (y = 0; y < rows; y++) {
              for (x = 0; x < cols; x++) {
-                topY = y * blockHeight
+                topY = yOffset + y * blockHeight
                 right = width - blockWidth - (x * blockWidth)
                 bottom = height - blockHeight - (y * blockHeight)
                 left = x * blockWidth
                 clip = topY + "px " + right + "px " + bottom + "px " + left + "px"
-//                console.log(clip)
-//     background-position-x: -50px;
-//     background-position-y: -50px;
-								bgposY = -topY
-								bgposX = -left
+                bgposY = -topY
+                bgposX = -left
                 css = "background-position-y: " + bgposY +"px; background-position-x: " + bgposX +"px; background-image: url(" + src + "); height:" + blockHeight + "px; width: " + blockWidth+ "px; top: " + topY + "px; left: " + left  + "px;"
                 addElement(css, "subImg" + c)
                 c+=1
@@ -146,8 +94,19 @@
 				selImages = Array()
 			}
 		});
+      
+      randomizeLocations(25)
   });
 
+            function toggleFinal() {
+                if (showingFinal) {
+                    $(".imgSquare").show()
+                } else {
+                    $(".imgSquare").hide()
+                }
+                showingFinal = !showingFinal
+            }
+            
   function randomizeLocations(length) {
 			a1 = Array()
 			a2 = Array()
@@ -181,6 +140,11 @@ function swap(f1, f2)
 		</script>
 	</head>
 <BODY>
-	<div id = "holder"></div>
+    
+	<div id = "holder" class = "holderDiv">
+    
+    </div>
+<button type="button" onclick="randomizeLocations(25)">Click Me!</button>
+
 </BODY>
 </HTML>
