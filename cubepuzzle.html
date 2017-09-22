@@ -6,9 +6,9 @@
             .imgSquare {
                 display: inherit;
             }
-            
+
             .holderDiv {
-                
+
             }
 
 		</style>
@@ -20,13 +20,13 @@
 
 
 		$(document).keypress(function(e) {
-			 alert(e.which)
+			 //alert(e.which)
 			if(e.which == 97) {
 
 			} else if(e.which == 115) {
                 toggleFinal()
 		 } else if(e.which == 114) {
-            randomizeLocations(25)
+            randomizeLocations()
 		 }
 		});
 
@@ -42,11 +42,27 @@
         x.appendChild(d)
     }
 
+		function reload() {
+			src = document.getElementById("srcImg").value
+			width = document.getElementById("imgWidth").value
+			height = document.getElementById("imgHeight").value
+			rows = document.getElementById("rows").value
+			cols = document.getElementById("cols").value
+			createSquares(src,width,height,rows,cols)
+		}
+
     function createSquares(src, width, height, rows, cols) {
-        blockWidth = width / rows
-        blockHeight = height / cols
-        yOffset = 10
-        xOffset = 10
+
+				document.getElementById("imgFinal").setAttribute("src", src)
+				h = document.getElementById("holder")
+				while (h.hasChildNodes()) {
+    			h.removeChild(h.lastChild);
+				}
+
+        blockWidth = width / cols
+        blockHeight = height / rows
+        yOffset = 78
+        xOffset = 8
         c = 0
         for (y = 0; y < rows; y++) {
              for (x = 0; x < cols; x++) {
@@ -62,6 +78,9 @@
                 c+=1
             }
         }
+
+				setClicks()
+				randomizeLocations()
     }
 
 		function shuffle(array) {
@@ -85,18 +104,24 @@
 
 	var selImages = Array()
 
-
-  $(document).ready(function() {
-	createSquares("https://ichef.bbci.co.uk/news/660/cpsprodpb/E9DF/production/_96317895_gettyimages-164067218.jpg",650,350,5,5)
+	function setClicks() {
 		$( ".imgSquare" ).click(function() {
+			this.style.boxSizing = "border-box"
+			this.style.border = "4px solid red"
 			selImages.push(this)
 			if (selImages.length == 2) {
+				selImages[0].style.border = ""
+				selImages[1].style.border = ""
 				swap(selImages[0],selImages[1])
 				selImages = Array()
 			}
 		});
-      
-      randomizeLocations(25)
+	}
+
+  $(document).ready(function() {
+	//createSquares("https://ichef.bbci.co.uk/news/660/cpsprodpb/E9DF/production/_96317895_gettyimages-164067218.jpg",650,350,5,5)
+	//createSquares("cat.png",1200,700,7,6)
+	createSquares("bwcat.png",500,400,5,4)
   });
 
             function toggleFinal() {
@@ -107,24 +132,32 @@
                 }
                 showingFinal = !showingFinal
             }
-            
-  function randomizeLocations(length) {
+
+  function randomizeLocations() {
+		  length = document.getElementById("holder").children.length
 			a1 = Array()
-			a2 = Array()
 			for (i = 0; i < length; i++) {
 				a1[i] = i
-				a2[i] = i
 			}
 
 			a1 = shuffle(a1)
-			a2 = shuffle(a2)
 
-			for (i = 0; i < length; i++) {
+			for (i = 0; i < length - 1; i++) {
 				i1 = document.getElementById("subImg" + a1[i])
-				i2 = document.getElementById("subImg" + a2[i])
+				i2 = document.getElementById("subImg" + a1[i + 1])
 				swap(i1,i2)
 			}
+
+			swap(document.getElementById("subImg0"), document.getElementById("subImg1"))
+
   }
+
+function displayImage(details) {
+	i = details.split(",")
+
+	createSquares(i[0],i[1],i[2],i[3],i[4])
+
+}
 
 function swap(f1, f2)
 {
@@ -141,12 +174,27 @@ function swap(f1, f2)
 		</script>
 	</head>
 <BODY>
-    
+	<div>
+	<button type="button" onclick="randomizeLocations()">Randomize</button>
+	<button type="button" onclick="toggleFinal()">Show Final</button><p>
+
+
+		<select onchange="displayImage(this.value)">
+			<option value = "cat.png,1200,700,7,6">Cat</option>
+			<option value = "bwcat.png,500,400,5,4">Black Cat</option>
+	  </select>
+
+	<input id = "srcImg" type = "text" value="https://ichef.bbci.co.uk/news/660/cpsprodpb/E9DF/production/_96317895_gettyimages-164067218.jpg"/>
+	<input id = "imgWidth" type = "text"/>
+	<input id = "imgHeight" type = "text"/>
+	<input id = "rows" type = "text" value = 5>
+	<input id = "cols" type = "text" value = 5>
+	<button type="button" onclick="reload()">Reload</button><p>
+		<img id = "imgFinal" src ="">
+	</div>
 	<div id = "holder" class = "holderDiv">
-    <img src = "https://ichef.bbci.co.uk/news/660/cpsprodpb/E9DF/production/_96317895_gettyimages-164067218.jpg">
+    <img src = "">
     </div>
-<button type="button" onclick="randomizeLocations(25)">Randomize</button>
-    <button type="button" onclick="toggleFinal()">Show Final</button>
 
 
 </BODY>
