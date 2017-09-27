@@ -16,8 +16,7 @@
 		<script src="puzzle_helpers.js"></script>
 
 		<script>
-            showingFinal = false
-
+    showingFinal = false
 
 		$(document).keypress(function(e) {
 			 //alert(e.which)
@@ -36,8 +35,6 @@
         d.setAttribute("class", "imgSquare")
         d.setAttribute("id", id)
 				d.setAttribute("class", "imgSquare")
-
-
         d.setAttribute("style", css + "position: absolute;");
         x.appendChild(d)
     }
@@ -70,9 +67,9 @@
                 right = width - blockWidth - (x * blockWidth)
                 bottom = height - blockHeight - (y * blockHeight)
                 left = x * blockWidth + xOffset
-                clip = topY + "px " + right + "px " + bottom + "px " + left + "px"
-                bgposY = -topY
-                bgposX = -left
+
+                bgposY = -topY + yOffset
+                bgposX = -left + xOffset
                 css = "background-position-y: " + bgposY +"px; background-position-x: " + bgposX +"px; background-image: url(" + src + "); height:" + blockHeight + "px; width: " + blockWidth+ "px; top: " + topY + "px; left: " + left + "px;"
                 addElement(css, "subImg" + c)
                 c+=1
@@ -80,7 +77,7 @@
         }
 
 				setClicks()
-				randomizeLocations()
+				//randomizeLocations()
     }
 
 		function shuffle(array) {
@@ -100,6 +97,10 @@
 		  }
 
 		  return array;
+}
+
+function showHint() {
+		// Find two elements that can be swapped and put a border around them
 }
 
 	var selImages = Array()
@@ -124,14 +125,14 @@
 	createSquares("bwcat.png",500,400,5,4)
   });
 
-            function toggleFinal() {
-                if (showingFinal) {
-                    $(".imgSquare").show()
-                } else {
-                    $(".imgSquare").hide()
-                }
-                showingFinal = !showingFinal
-            }
+  function toggleFinal() {
+      if (showingFinal) {
+          $(".imgSquare").show()
+      } else {
+          $(".imgSquare").hide()
+      }
+      showingFinal = !showingFinal
+  }
 
   function randomizeLocations() {
 		  length = document.getElementById("holder").children.length
@@ -166,8 +167,8 @@ function swap(f1, f2)
 
 	f1.style.top = f2.style.top;
 	f1.style.left = f2.style.left;
-	f2.style.top=initTop;
-	f2.style.left=initLeft;
+	f2.style.top = initTop;
+	f2.style.left = initLeft;
 }
 
 
@@ -176,6 +177,7 @@ function swap(f1, f2)
 <BODY>
 	<div>
 	<button type="button" onclick="randomizeLocations()">Randomize</button>
+	<button type="button" onclick="showHint()">Show Hint</button>
 	<button type="button" onclick="toggleFinal()">Show Final</button><p>
 
 
