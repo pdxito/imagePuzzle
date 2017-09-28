@@ -99,65 +99,72 @@
 		  return array;
 }
 
-function showHint() {
-		// Find two elements that can be swapped and put a border around them
+var sol = []
+
+function saveSolution() {
+	sol = []
+	c = document.getElementById("holder").children
+	for (i = 0; i < c.length; i++) {
+			sol[c[i].id] = document.getElementById("holder").children[i].style.top + "," + document.getElementById("holder").children[i].style.left
+	}
 }
 
-	var selImages = Array()
+function showHint() {
+		// Find two elements that can be swapped and put a border around them
 
-	function setClicks() {
-		$( ".imgSquare" ).click(function() {
-			this.style.boxSizing = "border-box"
-			this.style.border = "4px solid red"
-			selImages.push(this)
-			if (selImages.length == 2) {
-				selImages[0].style.border = ""
-				selImages[1].style.border = ""
-				swap(selImages[0],selImages[1])
-				selImages = Array()
-			}
-		});
+}
+
+var selImages = Array()
+
+function setClicks() {
+	$( ".imgSquare" ).click(function() {
+		this.style.boxSizing = "border-box"
+		this.style.border = "4px solid red"
+		selImages.push(this)
+		if (selImages.length == 2) {
+			selImages[0].style.border = ""
+			selImages[1].style.border = ""
+			swap(selImages[0],selImages[1])
+			selImages = Array()
+		}
+	});
+}
+
+$(document).ready(function() {
+//createSquares("https://ichef.bbci.co.uk/news/660/cpsprodpb/E9DF/production/_96317895_gettyimages-164067218.jpg",650,350,5,5)
+//createSquares("cat.png",1200,700,7,6)
+createSquares("bwcat.png",500,400,5,4)
+});
+
+function toggleFinal() {
+  if (showingFinal) {
+      $(".imgSquare").show()
+  } else {
+      $(".imgSquare").hide()
+  }
+  showingFinal = !showingFinal
+}
+
+function randomizeLocations() {
+  length = document.getElementById("holder").children.length
+	a1 = Array()
+	for (i = 0; i < length; i++) {
+		a1[i] = i
 	}
 
-  $(document).ready(function() {
-	//createSquares("https://ichef.bbci.co.uk/news/660/cpsprodpb/E9DF/production/_96317895_gettyimages-164067218.jpg",650,350,5,5)
-	//createSquares("cat.png",1200,700,7,6)
-	createSquares("bwcat.png",500,400,5,4)
-  });
+	a1 = shuffle(a1)
 
-  function toggleFinal() {
-      if (showingFinal) {
-          $(".imgSquare").show()
-      } else {
-          $(".imgSquare").hide()
-      }
-      showingFinal = !showingFinal
-  }
-
-  function randomizeLocations() {
-		  length = document.getElementById("holder").children.length
-			a1 = Array()
-			for (i = 0; i < length; i++) {
-				a1[i] = i
-			}
-
-			a1 = shuffle(a1)
-
-			for (i = 0; i < length - 1; i++) {
-				i1 = document.getElementById("subImg" + a1[i])
-				i2 = document.getElementById("subImg" + a1[i + 1])
-				swap(i1,i2)
-			}
-
-			swap(document.getElementById("subImg0"), document.getElementById("subImg1"))
-
-  }
+	for (i = 0; i < length - 1; i++) {
+		i1 = document.getElementById("subImg" + a1[i])
+		i2 = document.getElementById("subImg" + a1[i + 1])
+		swap(i1,i2)
+	}
+	swap(document.getElementById("subImg0"), document.getElementById("subImg1"))
+}
 
 function displayImage(details) {
 	i = details.split(",")
-
 	createSquares(i[0],i[1],i[2],i[3],i[4])
-
 }
 
 function swap(f1, f2)
@@ -170,8 +177,6 @@ function swap(f1, f2)
 	f2.style.top = initTop;
 	f2.style.left = initLeft;
 }
-
-
 		</script>
 	</head>
 <BODY>
@@ -179,8 +184,6 @@ function swap(f1, f2)
 	<button type="button" onclick="randomizeLocations()">Randomize</button>
 	<button type="button" onclick="showHint()">Show Hint</button>
 	<button type="button" onclick="toggleFinal()">Show Final</button><p>
-
-
 		<select onchange="displayImage(this.value)">
 			<option value = "cat.png,1200,700,7,6">Cat</option>
 			<option value = "bwcat.png,500,400,5,4">Black Cat</option>
