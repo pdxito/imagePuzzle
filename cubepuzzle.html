@@ -77,6 +77,7 @@
         }
 
 				setClicks()
+				saveSolution()
 				//randomizeLocations()
     }
 
@@ -101,17 +102,57 @@
 
 var sol = []
 
+function locat(el) {
+	return el.style.top + "," + el.style.left
+}
 function saveSolution() {
 	sol = []
 	c = document.getElementById("holder").children
 	for (i = 0; i < c.length; i++) {
-			sol[c[i].id] = document.getElementById("holder").children[i].style.top + "," + document.getElementById("holder").children[i].style.left
+			sol[c[i].id] = locat(document.getElementById("holder").children[i])
 	}
 }
 
 function showHint() {
 		// Find two elements that can be swapped and put a border around them
+		c = document.getElementById("holder").children
+		var wrongImgs = Array()
+		var currLocs = []
+		for (i = 0; i < c.length; i++) {
+				childImg =  document.getElementById("holder").children[i]
 
+				curLoc = locat(childImg)
+				ans = sol[childImg.id]
+				match = (ans == curLoc)
+
+				currLocs[curLoc] = childImg.id
+
+				console.log(childImg.id + ": " + ans + " : " + curLoc + " : " + match)
+				if (match == false) {
+					wrongImgs.push(childImg.id)
+				}
+				//.style.top + "," + document.getElementById("holder").children[i].style.left
+		}
+
+		if (wrongImgs.length >= 2) {
+			// Shuffle just to grab a random one
+			wrongImgs = shuffle(wrongImgs)
+			firstWrong = wrongImgs.pop()
+
+			correctLoc = sol[firstWrong]
+			wrongLoc = document.getElementById(firstWrong).style.top + "," + document.getElementById(firstWrong).style.left
+
+			// Find the image that is in the location where the wrong image should be
+			otherImg = currLocs[correctLoc]
+			console.log(firstWrong + " is at " + wrongLoc + " should be " + correctLoc + " which is " + otherImg)
+
+			// Get what the location of the wrong square should be
+			swap(document.getElementById(firstWrong), document.getElementById(otherImg))
+
+
+		}
+
+		// find in sol[] the backOffset
 }
 
 var selImages = Array()
