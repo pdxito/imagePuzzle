@@ -147,12 +147,18 @@ function showHint() {
 			console.log(firstWrong + " is at " + wrongLoc + " should be " + correctLoc + " which is " + otherImg)
 
 			// Get what the location of the wrong square should be
-			swap(document.getElementById(firstWrong), document.getElementById(otherImg))
+			highlight(document.getElementById(firstWrong))
+			highlight(document.getElementById(otherImg))
 
-
+			//swap(document.getElementById(firstWrong), document.getElementById(otherImg))
 		}
 
 		// find in sol[] the backOffset
+}
+
+function highlight(el) {
+	el.style.boxSizing = "border-box"
+	el.style.border = "4px solid blue"
 }
 
 var selImages = Array()
@@ -228,6 +234,8 @@ function swap(f1, f2)
 		<select onchange="displayImage(this.value)">
 			<option value = "cat.png,1200,700,7,6">Cat</option>
 			<option value = "bwcat.png,500,400,5,4">Black Cat</option>
+			<option value = "bluedoor.jpg,2048,1656,5,4">Blue Door</option>
+			<option value = "monkeyfam.jpg,1365,2048,4,5">Monkey Familiy</option
 	  </select>
 
 	<input id = "srcImg" type = "text" value="https://ichef.bbci.co.uk/news/660/cpsprodpb/E9DF/production/_96317895_gettyimages-164067218.jpg"/>
